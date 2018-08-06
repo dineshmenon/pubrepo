@@ -31,10 +31,9 @@ With scaling out postgresql service over multiple availability zones, there are 
 ### Isolation among processes in a service instance
 Every VM in a postgreSQL service instance runs postgresql related processes as well other supporting and required processes in the operating system. In order to make sure that postgreSQL process is sufficiently isolated from others, following security hardening measures are taken :
 
-- Each postgreSQL instance runs as a non-root user with access enough to access the resources required for postgreSQL processes to execute. So even if the postgreSQL process(es) gets compromised (demo to showcase this point using reverse shell hack), access will be limited to postgreSQL resources .
-- 
-- 
+- Each postgreSQL instance runs as a *__non-root user__* with access enough to access the resources required for postgreSQL processes to execute. So even if the postgreSQL process(es) gets compromised (demo to showcase this point using reverse shell hack), access will be limited to postgreSQL resources .
 
+- In order to provide further isolation and a mechanism for supporting access control security policies, including  mandatory access controls (MAC), *__SELinux__* is used. Here each postgres process is confined to the required set of files, port (bind and connect) and other resources by enforcing mandatory access control policies. Thus even if the user is compromised, only the process with the right labelling would be able to access the files (resources).
 
 ### Limiting resource usage at process level
 
