@@ -46,6 +46,8 @@ Failover time in the case of Azure is in the order of 10 seconds.
 In [aws] this problems is solved with the help of [Route53] along with [pgpool] nodes. SecondaryPrivateIPs are attached to both the postgresql nodes. This SecondaryPrivateIP can floated to any node in the same zone. [Route53] record set is created for both postgresql node. While creating [Route53] record set SecondaryPrivateIP of each postgresql is mentioned and policy specified will be MultiValue. 
 By MultiValue policy it means that DNS of [Route53] record will resolve to both the postgresql nodes. Also in standby node an iptable rule is added. This rule forwards all the request for postgrsql process on standby node to primary node. So Client/Customer connecting to [Route53] record set will be always forwarded to Primary node.
 
+[![N|Solid](https://github.com/dbossap/dbos-performance/blob/master/aws.png?raw=true)](https://nodesource.com/products/nsolid)
+
 During update of primary node standby node will be promoted to primary node. SecondaryPrivateIP of primary node is floated to [pgpool] node present in the same zone as primary node. 
 In [pgpool] node an iptable rule will be added. This rule forwards all request for postgresql process on [pgpool] node to new primary node. So all requests will forwarded to primary node always.
 Once the update is completed the old node will come back as standby node. SecondaryPrivateIP will be again floated from [pgpool] node to standby node and forwarding rule will be added from standby node to primary node.
