@@ -31,6 +31,13 @@ Various steps involved in this implementation is depicted below.
 
 [![N|Solid](https://github.com/dineshmenon/pubrepo/blob/master/resc/ha/Azure-Implementation.png?raw=true)]()
 
+[![N|Solid](https://raw.githubusercontent.com/dineshmenon/pubrepo/master/resc/ha/Failover-1.png?raw=true)]()
+
+[![N|Solid](https://raw.githubusercontent.com/dineshmenon/pubrepo/master/resc/ha/Failover-2.png?raw=true)]()
+
+[![N|Solid](https://raw.githubusercontent.com/dineshmenon/pubrepo/master/resc/ha/Failover-3.png?raw=true)]()
+
+[![N|Solid](https://raw.githubusercontent.com/dineshmenon/pubrepo/master/resc/ha/Failover-4.png?raw=true)]()
 
 ### Approach to achieve HA & Single Endpoint in AWS
 
@@ -38,8 +45,8 @@ Various steps involved in this implementation is depicted below.
 ### Approach to achieve HA & Single Endpoint in Openstack
 
 
-### Approach to achieve HA & Single Endpoint in Openstack
-One of the core services in SAP 
+
+
 
 
 
