@@ -2,7 +2,7 @@
 
 SAP Cloud Platform is an open platform-as-a-service (PaaS) product that provides core platform and backing services, for building and extending cloud applications on multiple cloud infrastructure providers. SAP Cloud Platform presently supports AWS, OpenStack, Azure and Google Cloud Platform (GCP).
 
-One of the core services provided by SAP Cloud Platform is PostgreSQL as a Service. Each PostgreSQL service instance consists of 5 VMs (1 PG Master, 1 PG Slave and 3 PGPOOL VMs). Since SAP Cloud Platform has a multi-tenant model - postgresql service instances (and associated apps) of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, it is imperative that postgresql service runs securely within the platform.
+>One of the core services provided by SAP Cloud Platform is PostgreSQL as a Service. Each PostgreSQL service instance consists of 5 VMs (1 PG Master, 1 PG Slave and 3 PGPOOL VMs). Since SAP Cloud Platform has a multi-tenant model - postgresql service instances (and associated apps) of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, it is imperative that postgresql service runs securely within the platform.
 
 Several measures taken to harden the security aspects of PostgreSQL service includes but is not limited to the following.
  
@@ -13,16 +13,20 @@ With scaling out postgresql service over multiple availability zones, there are 
 
 ##### Isolation between control plane and data plane components
 
-PostgreSQL service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two different virtual networks. Each virtual network gives us complete control over the networking environment, including selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
-
-Within the virtual network, postgresql service instances reside in a different subnet and control plane operators like Bosh (deployment and lifecycle management IAAS agnostic framework)  and Service Fabrik (the orchestrator compoenent) reside in different ones ensuring further isolation.
-The exposure of postgresql services also gets limited by using a private subnet with no internet access directly.
+- PostgreSQL service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two different virtual networks. Each virtual network gives us complete control over the networking environment, including selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
+- Within the virtual network, postgresql service instances reside in a different subnet and control plane operators like Bosh (deployment and lifecycle management IAAS agnostic framework)  and Service Fabrik (the orchestrator compoenent) reside in different ones ensuring further isolation.
+- The exposure of postgresql services also gets limited by using a private subnet with no internet access directly.
 
 ##### Leveraging infrastructure level security
  
-Whenever a posgresql instance gets launched, it gets associated with one or more security groups. A security group acts as a virtual firewall that controls the traffic for one or more instances. The rules associated with the group enables the service to allow traffic to or from its associated vms. Since new rules can be applied at runtime to all of the postgreSQL service instances, runtime attacks from compromised sources are neutralized by applying appropriate rules.
-### Isolation among services
-In orde to achieve isolation among instances, 
+- Whenever a posgresql instance gets launched, it gets associated with one or more security groups. A security group acts as a virtual firewall that controls the traffic for one or more instances. The rules associated with the group enables the service to allow traffic to or from its associated vms. 
+- Since new rules can be applied at runtime to all of the postgreSQL service instances, runtime attacks from compromised sources are neutralized by applying appropriate rules.
+- Denial of Service (DoS) attacks via source IP spoofing is also prevented by enabling appropriate flags in the IAAS level.
+
+### Isolation among postgreSQL service instances
+- In orde to achieve isolation among postgeresql instances, a component called "iptables-manager" is used. Whenever a postgreSQL service instance gets created, this component applies necessary iptable rules to each of the VMs in the given service instance in such a way that only those VMs will be able to communicate among themselves. 
+- All traffic to and from other postgresql service instances gets blocked, thereby making sure that even if any service instance get compromised, other service instances are not effected.
+- Similarly, necessary rules are applied to prevent ICMP based attacks.
 
 ### Isolation among processes in a service instance
 O
