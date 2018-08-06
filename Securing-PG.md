@@ -11,9 +11,19 @@ IAAS providers are typically hosted in multiple locations world-wide which is co
 
 With scaling out postgresql service over multiple availability zones, there are network-related aspects to be addressed. In most of the infrastructures, an availability zone maps to a subnet with a fixed block of IP addresses, spanned unilaterally over a virtual network. In Azure and GCP, it is possible to have a subnet that spans over multiple AZs in a region because subnets are treated as regional resources.
 
+##### Isolation between control plane and data plane components
+
+PostgreSQL service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two different virtual networks. Each virtual network gives us complete control over the networking environment, including selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
+
+Within the virtual network, postgresql service instances reside in a different subnet and control plane operators like Bosh (deployment and lifecycle management IAAS agnostic framework)  and Service Fabrik (the orchestrator compoenent) reside in different ones ensuring further isolation.
+The exposure of postgresql services also gets limited by using a private subnet with no internet access directly.
+
+##### Leveraging infrastructure level security
  
+Whenever a posgresql instance gets launched, it gets associated with one or more security groups. A security group acts as a virtual firewall that controls the traffic for one or more instances. The rules associated with the group enables the service to allow traffic to or from its associated vms. Since new rules can be applied at runtime to all of the postgreSQL service instances, runtime attacks from compromised sources are neutralized by applying appropriate rules.
 ### Isolation among services
-O
+In orde to achieve isolation among instances, 
+
 ### Isolation among processes in a service instance
 O
 ### Limiting resource usage at process level
