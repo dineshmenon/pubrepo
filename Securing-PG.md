@@ -29,9 +29,17 @@ With scaling out postgresql service over multiple availability zones, there are 
 - Similarly, necessary rules are applied to prevent ICMP based attacks.
 
 ### Isolation among processes in a service instance
-O
+Every VM in a postgreSQL service instance runs postgresql related processes as well other supporting and required processes in the operating system. In order to make sure that postgreSQL process is sufficiently isolated from others, following security hardening measures are taken :
+
+- Each postgreSQL instance runs as a non-root user with access enough to access the resources required for postgreSQL processes to execute. So even if the postgreSQL process(es) gets compromised (demo to showcase this point using reverse shell hack), access will be limited to postgreSQL resources .
+- 
+- 
+
+
 ### Limiting resource usage at process level
-Ok
+
+
+
 ### Limiting access to system calls using seccomp
 Ok
 
