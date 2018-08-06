@@ -22,6 +22,13 @@ It is also worth noting that only jdbc driver supports multiple IPs in the conne
 
 ### Approach to achieve HA & Single Endpoint in Azure & GCP
 
+In the case of Azure Cloud, a standard internal load balancer is associated with each service instance. The client ip (single ip) is associated with the load balancer as the frontend ip address. Both the postgresvms are made as a part of backend pool of the load balancer. A forwarding rule is configured to forward the requests to the backend pool. 
+A health check probe runs in both of the vms - it returns 200 OK from the master node nad 500 ISR from the standby node. This probe is associated with the load balancer as the health check probe.
+
+Thus at any point in time, load balancer forwards the traffic to the *__healthy__* node only, in this case, master node in the postgreSQL service instance.
+
+Various steps involved in this implementation is depicted below. 
+
 [![N|Solid](https://github.com/dineshmenon/pubrepo/blob/master/resc/ha/Azure-Implementation.png?raw=true)]()
 
 
