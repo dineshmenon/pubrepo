@@ -1,10 +1,40 @@
+# High Availability (HA) for Postgresql as a Service in SAP Multi-Cloud Platform
+
+SAP Cloud Platform is an open platform-as-a-service (PaaS) product that provides core platform and backing services, for building and extending cloud applications on multiple cloud infrastructure providers. SAP Cloud Platform presently supports AWS, OpenStack, Azure and Google Cloud Platform (GCP).
+
+>One of the core services provided by SAP Cloud Platform is # *__PostgreSQL as a Service__*. Each PostgreSQL service instance consists of 5 VMs (1 PG Master, 1 PG Standby and 3 PGPOOL VMs).
+
+### PostgreSQL HA cluster using pgpool-II
+
+Each PostgreSQL service instance consists of 5 VMs (1 PG Master, 1 PG Standby and 3 PGPOOL VMs). Standby node replicates the data being written to primary node in an asynchronous way. Primary node failure is mitigated by promoting standby node to primary, thereby acheiving high availability. To detect the the failover scenario of postgres master node, [pgpool] is used. pgpool monitors the backends (postgresql service vms) configured in the cluster and triggers the failover command when it identifies a failure.
+
+[![N|Solid](https://github.com/dbossap/dbos-performance/blob/master/clusterSetup2.png?raw=true)](https://nodesource.com/products/nsolid)
+
+Once the failover is performed, STONITH (Shoot The Other Node In The Head) is performed. Once the operation is performed, old master is resurrected (vm is recreated) and necessary binaries are loaded for the node to function appropriately. The old master then joins the cluster in standby mode.
+
+### Single Endpoint for PostgreSQL Service
+
+Each PostgreSQL service instance consists of 5 VMs (1 PG Master, 1 PG Standby and 3 PGPOOL VMs). Standby node replicates the data being written to primary node in an asynchronous way. Primary node fail
+
+### Network Security
+
+
+### Network Security
+### Network Security
+
+
+One of the core services in SAP 
+
+[![N|Solid](https://github.com/dineshmenon/pubrepo/blob/master/resc/ha/Azure-Implementation.png?raw=true)]()
+
+
 # Dillinger
 
 [![N|Solid](https://cldup.com/dTxpPi9lDf.thumb.png)](https://nodesource.com/products/nsolid)
 
 Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
 
-  - Type some Markdown on the left
+  - Type some Markdown on the left edits
   - See HTML in the right
   - Magic
 
