@@ -42,3 +42,5 @@ In order to make sure that all processes including postgreSQL process in the ser
 
 ### Limiting access to system calls using seccomp
 
+Each of the processes in the postgreSQL service instance is sandboxed so that they can only make use of the required system calls. This is done using seccomp, one of the efficient ways of filtering system calls which is in turn based on BPF (Berkeley Packet Filter, a programmable packet filtering and classification system that runs within the kernel). Thus even if a process is compromised, seccomp restricts the usage of system calls to the bare minimum required.
+
