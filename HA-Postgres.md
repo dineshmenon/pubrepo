@@ -39,12 +39,23 @@ Various steps involved in this implementation is depicted below.
 
 [![N|Solid](https://raw.githubusercontent.com/dineshmenon/pubrepo/master/resc/ha/Failover-4.png?raw=true)]()
 
+Failover time in the case of Azure is in the order of 10 seconds. 
+
 ### Approach to achieve HA & Single Endpoint in AWS
 
+In [aws] this problems is solved with the help of [Route53] along with [pgpool] nodes. SecondaryPrivateIPs are attached to both the postgresql nodes. This SecondaryPrivateIP can floated to any node in the same zone. [Route53] record set is created for both postgresql node. While creating [Route53] record set SecondaryPrivateIP of each postgresql is mentioned and policy specified will be MultiValue. 
+By MultiValue policy it means that DNS of [Route53] record will resolve to both the postgresql nodes. Also in standby node an iptable rule is added. This rule forwards all the request for postgrsql process on standby node to primary node. So Client/Customer connecting to [Route53] record set will be always forwarded to Primary node.
+
+During update of primary node standby node will be promoted to primary node. SecondaryPrivateIP of primary node is floated to [pgpool] node present in the same zone as primary node. 
+In [pgpool] node an iptable rule will be added. This rule forwards all request for postgresql process on [pgpool] node to new primary node. So all requests will forwarded to primary node always.
+Once the update is completed the old node will come back as standby node. SecondaryPrivateIP will be again floated from [pgpool] node to standby node and forwarding rule will be added from standby node to primary node.
+Floating SecondaryPrivateIP will take few seconds. So overall downtime will be bounded by few seconds.
+
+On similar lines failure situation will be handled with minimum downtime.
 
 ### Approach to achieve HA & Single Endpoint in Openstack
 
-
+In the case of openstack (SC7), we make use of allowed-address-pair feature to associate the client ip (single ip) to both the postgreSQL VMs. During failover, arping is done from the new master to inform the other VMs in the network.
 
 
 
