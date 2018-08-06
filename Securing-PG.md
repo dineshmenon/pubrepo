@@ -2,7 +2,7 @@
 
 SAP Cloud Platform is an open platform-as-a-service (PaaS) product that provides core platform and backing services, for building and extending cloud applications on multiple cloud infrastructure providers. SAP Cloud Platform presently supports AWS, OpenStack, Azure and Google Cloud Platform (GCP).
 
->One of the core services provided by SAP Cloud Platform is PostgreSQL as a Service. Each PostgreSQL service instance consists of 5 VMs (1 PG Master, 1 PG Slave and 3 PGPOOL VMs). Since SAP Cloud Platform has a multi-tenant model - postgresql service instances (and associated apps) of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, it is imperative that postgresql service runs securely within the platform.
+>One of the core services provided by SAP Cloud Platform is # *__PostgreSQL as a Service__*. Each PostgreSQL service instance consists of 5 VMs (1 PG Master, 1 PG Slave and 3 PGPOOL VMs). Since SAP Cloud Platform has a multi-tenant model - postgresql service instances (and associated apps) of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, it is imperative that postgresql service runs securely within the platform.
 
 Several measures taken to harden the security aspects of PostgreSQL service includes but is not limited to the following.
  
