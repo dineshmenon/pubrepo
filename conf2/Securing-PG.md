@@ -7,19 +7,19 @@ SAP Cloud Platform (SCP) is an open platform-as-a-service (PaaS) product that pr
 Measures taken to harden the security aspects of PostgreSQL-as-a-Service:
  
 ### Network Security
-With scaling out PostgreSQL-as-a-Service over multiple AZs, there are network-related aspects to be addressed. In most of the infrastructures, an AZ maps to a subnet with a fixed block of IP addresses, spanned unilaterally over a virtual network. In Azure and GCP, it is possible to have a subnet that spans over multiple AZs in a region because subnets are treated as regional resources.
+With scaling out PostgreSQL-as-a-Service over multiple AZs, network-related aspects are important. In most of the infrastructures, an AZ maps to a subnet with a fixed block of IP addresses, spanned over a virtual network. In Azure and GCP, it is possible to have a subnet that spans over multiple AZs in a region because subnets are treated as regional resources.
 
 ##### Isolation between control plane and data plane components
 
-- PostgreSQL-as-a-Service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two *__different virtual networks__*. Each virtual network gives us complete control over the networking environment, including selection of your own IP address range, creation of subnets, and configuration of route tables and network gateways.
-- Within the virtual network, postgresql service instances reside in a *__different subnet__* from control plane operators like Bosh (deployment-and-lifecycle-management-IAAS-agnostic-framework)  and Service Fabrik (orchestrator-compoenent).
+- PostgreSQL-as-a-Service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two *__different virtual networks__*. Each virtual network gives us complete control like selection of custom IP-address-range, creation of subnets, and configuration of route tables/network gateways.
+- Within the virtual network, PostgreSQL-as-a-Service instances reside in a *__different subnet__* from control plane operators like Bosh (deployment-and-lifecycle-management-IAAS-agnostic-framework)  and Service-Fabrik (orchestrator-compoenent).
 
 ##### Leveraging infrastructure level security
  
-- Whenever a PostgreSQL-as-a-Service gets launched, it gets associated with one or more *__security groups__*. A security group acts as a virtual firewall that controls the traffic for one or more instances. The rules associated with the group enables the service to allow traffic to or from its associated vms.
+- Whenever a PostgreSQL-as-a-Service gets launched, it gets associated with one or more *__security groups__*, wihch acts as a virtual firewall that controls the traffic to instance vms.
 - DoS attacks via source *__IP spoofing__* is prevented by enabling appropriate flags in the IAAS.
 - 
-### Isolation among postgreSQL service instances
+### Isolation among PostgreSQL-as-a-Service instances
 - In order to achieve isolation among PostgreSQL-as-a-Service instances, *__iptables-manager__* is used. Whenever a PostgreSQL-as-a-Service instance gets created, it applies necessary iptable rules to each of the VMs in such a way that only those VMs will be able to communicate among themselves.
 - All traffic to and from other postgresql service instances gets blocked, thus compromised and others are insulated.
 - Necessary rules are applied to prevent *__ICMP__* based attacks.
