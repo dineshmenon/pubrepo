@@ -1,8 +1,8 @@
 # Securing PostgreSQL Service in a cloud environment
 
-SAP Cloud Platform (SCP) is an open platform-as-a-service (PaaS) product that provides core platform and backing services, for building and extending cloud applications on multiple cloud infrastructure providers. SCP presently supports AWS, OpenStack, Azure and GCP.
+SAP Cloud Platform (SCP) is an open platform-as-a-service (PaaS) product that provides core services, for building and extending cloud applications on multiple cloud IAAS. SCP supports AWS, OpenStack, Azure and GCP.
 
->One of the core services provided by SCP is # *__PostgreSQL as a Service (PostgreSQL-as-a-Service)__*. Each PostgreSQL-as-a-Service instance consists of 5 VMs (PG-Master,PG-Standby and 3 PGPOOL VMs). Since SCP has a multi-tenant model, PostgreSQL-as-a-Service instances of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, it is imperative that PostgreSQL-as-a-Service runs securely within the platform.
+>One of the core services provided by SCP is # *__PostgreSQL as a Service (PostgreSQL-as-a-Service)__*. Each PostgreSQL-as-a-Service instance consists of 5 VMs (PG-Master,PG-Standby, 3-PGPOOL VMs). PostgreSQL-as-a-Service instances of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, it is imperative that PostgreSQL-as-a-Service runs securely within the platform.
 
 Measures taken to harden the security aspects of PostgreSQL-as-a-Service:
  
