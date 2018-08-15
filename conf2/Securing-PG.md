@@ -9,14 +9,13 @@ With scaling out PostgreSQL-as-a-Service over multiple AZs, network-related aspe
 
 ##### Isolation between control and data plane
 
-- PostgreSQL-as-a-Service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two *__different virtual networks__*. Each virtual network gives us complete control like selection of custom IP-address-range, creation of subnets, and configuration of route tables/network gateways.
+- PostgreSQL-as-a-Service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two *__different virtual networks__*. Each virtual network gives complete control on selection of custom IP-address-range, creation of subnets, and configuration of route tables/network gateways.
 - Within the virtual-network, PostgreSQL-as-a-Service instances reside in a *__different subnet__* from control plane operators like Bosh (deployment-and-lifecycle-management-IAAS-agnostic-framework)  and Service-Fabrik (orchestrator-compoenent).
 
 ##### Leveraging infrastructure level security
  
 - Whenever a PostgreSQL-as-a-Service gets launched, it gets associated with one or more *__security groups__*, wihch acts as a virtual firewall that controls the traffic to instance vms.
 - DoS attacks via source *__IP spoofing__* is prevented by enabling appropriate flags in the IAAS.
-- 
 ### Isolation among PostgreSQL-as-a-Service instances
 - In order to achieve isolation among PostgreSQL-as-a-Service instances, *__iptables-manager__* is used which applies necessary iptable rules to each of the VMs in such that only instance VMs will be able to communicate among themselves.
 - All traffic to and from other postgresql service instances gets blocked, thus compromised and others are insulated.
@@ -24,7 +23,7 @@ With scaling out PostgreSQL-as-a-Service over multiple AZs, network-related aspe
 
 ### Isolation among processes in a PostgreSQL-as-a-Service instance
 
-- Each PostgreSQL-as-a-Service instance runs as a *__non-root user__* with access enough to access the resources required for postgreSQL processes to execute, thereby relying on DAC (Discretionary-Access-Control).
+- Each PostgreSQL-as-a-Service instance runs as a *__non-root user__* with privileges enough to access the resources required for postgreSQL processes to execute, thereby relying on DAC (Discretionary-Access-Control).
 
 - To provide further isolation and a mechanism for supporting access control security policies, including  mandatory access controls (MAC), *__SELinux__* is used. Each postgres process is confined to the required set of files, port (bind and connect) and other resources by enforcing mandatory access control policies.
 
