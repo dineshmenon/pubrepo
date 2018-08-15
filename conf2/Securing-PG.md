@@ -1,6 +1,8 @@
 SAP Cloud Platform (SCP) is an open platform-as-a-service (PaaS) product that provides core services, for building and extending cloud applications on multiple cloud IAAS. SCP supports AWS, OpenStack, Azure and GCP.
 
->One of the core services provided by SCP is # *__PostgreSQL as a Service (PostgreSQL-as-a-Service)__*. Each PostgreSQL-as-a-Service instance consists of 5 VMs (PG-Master,PG-Standby, 3-PGPOOL VMs). PostgreSQL-as-a-Service instances of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, follwing measures are taken to run it securely within the platform.
+>One of the core services provided by SCP is # *__PostgreSQL as a Service (PostgreSQL-as-a-Service)__*. Each PostgreSQL-as-a-Service instance consists of 5 VMs (PG-Master,PG-Standby, 3-PGPOOL VMs). PostgreSQL-as-a-Service instances of each tenant should be isolated from others. 
+
+Due to the myriad of challenges and possible attack vectors in cloud services, follwing measures are taken to run it securely within the platform.
 
 ### Network Security
 With scaling out PostgreSQL-as-a-Service over multiple AZs, network-related aspects are important. In most of the infrastructures, an AZ maps to a subnet with a fixed block of IP addresses, spanned over a virtual network. In Azure and GCP, it is possible to have a subnet that spans over multiple AZs in a region because subnets are treated as regional resources.
