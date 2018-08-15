@@ -24,18 +24,16 @@ With scaling out PostgreSQL-as-a-Service over multiple AZs, there are network-re
 - All traffic to and from other postgresql service instances gets blocked, thus compromised and others are insulated.
 - Necessary rules are applied to prevent *__ICMP__* based attacks.
 
-### Isolation among processes in a service instance
-Every VM in a postgreSQL service instance runs postgresql related processes as well other supporting and required processes in the operating system. In order to make sure that postgreSQL process is sufficiently isolated from others, following security hardening measures are taken :
+### Isolation among processes in a PostgreSQL-as-a-Service instance
 
-- Each postgreSQL instance runs as a *__non-root user__* with access enough to access the resources required for postgreSQL processes to execute, thereby relying on DAC (Discretionary Access Control) mechanism. So even if the postgreSQL process(es) gets compromised (demo to showcase this point using reverse shell hack), access will be limited to postgreSQL resources .
+- Each postgreSQL instance runs as a *__non-root user__* with access enough to access the resources required for postgreSQL processes to execute, thereby relying on DAC (Discretionary-Access-Control).
 
-- In order to provide further isolation and a mechanism for supporting access control security policies, including  mandatory access controls (MAC), *__SELinux__* is used. Here each postgres process is confined to the required set of files, port (bind and connect) and other resources by enforcing mandatory access control policies. Thus even if the user is compromised, only the process with the right labelling would be able to access the files (resources).
+- In order to provide further isolation and a mechanism for supporting access control security policies, including  mandatory access controls (MAC), *__SELinux__* is used. Here each postgres process is confined to the required set of files, port (bind and connect) and other resources by enforcing mandatory access control policies.
 
 ### Limiting resource usage at process level
 
-In order to make sure that all processes including postgreSQL process in the service instance VM gets the required share of resources (CPU, file descriptors), *__getrlimit()__* and *__setrlimit()__* functions are used. This guarantees that the usage of the process is limited and postgresql processes will not get hogged by other processes in the system.
-
+In order to limit usage and to make sure that postgres processes aren't hogged for resources (CPU, file descriptors), *__getrlimit()__* and *__setrlimit()__* functions are used.
 
 ### Limiting access to system calls using seccomp
 
-Each of the processes in the postgreSQL service instance is sandboxed so that they can only make use of the required system calls. This is done using *__seccomp__*, one of the efficient ways of filtering system calls which is in turn based on BPF (Berkeley Packet Filter, a programmable packet filtering and classification system that runs within the kernel). Thus even if a process is compromised, seccomp restricts the usage of system calls to the bare minimum required.
+Processes in PostgreSQL-as-a-Service service instance is sandboxed such that they can only make use of required system calls. This is done using *__seccomp__*, one of the efficient ways of filtering system calls which is in turn based on BPF (Berkeley-Packet-Filter).
