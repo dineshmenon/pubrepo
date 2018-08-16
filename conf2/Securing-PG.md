@@ -4,7 +4,7 @@ SAP Cloud Platform (SCP) is an open platform-as-a-service (PaaS) product that pr
 
     One of the core services provided by SCP is PostgreSQL as a Service (PostgreSQL-as-a-Service). Each PostgreSQL-as-a-Service instance(cluster) consists of 5 VMs (PG-Master, PG-Standby, 3-PGPOOL VMs). 
 
-[![N|Solid](https://github.com/dbossap/dbos-performance/blob/master/clusterSetup2.png?raw=true)](https://nodesource.com/products/nsolid)
+[![N|Solid](https://raw.githubusercontent.com/dbossap/dbos-performance/master/postgresql-Cluster.png?raw=true)](https://nodesource.com/products/nsolid)
 
 PostgreSQL-as-a-Service instances of each tenant should be isolated from others. Due to the myriad of challenges and possible attack vectors in cloud services, follwing measures are taken to run it securely within the platform.
 
