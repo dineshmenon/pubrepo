@@ -2,7 +2,6 @@ SAP Cloud Platform (SCP) is an open platform-as-a-service (PaaS) product that pr
 
 [![N|Solid](https://github.com/dineshmenon/pubrepo/blob/master/resc/secure-pg/SAP_Cloud_Platform.png?raw=true)](https://nodesource.com/products/nsolid)
 
-
     One of the core services provided by SCP is PostgreSQL as a Service (PostgreSQL-as-a-Service). Each PostgreSQL-as-a-Service instance(cluster) consists of 5 VMs (PG-Master, PG-Standby, 3-PGPOOL VMs). 
 
 [![N|Solid](https://github.com/dbossap/dbos-performance/blob/master/clusterSetup2.png?raw=true)](https://nodesource.com/products/nsolid)
@@ -12,9 +11,12 @@ PostgreSQL-as-a-Service instances of each tenant should be isolated from others.
 ### Network Security
 With scaling out PostgreSQL-as-a-Service over multiple AZs, network-related aspects are important. In most of the infrastructures, an AZ maps to a subnet with a fixed block of IP addresses, spanned over a virtual network. In Azure and GCP, it is possible to have a subnet that spans over multiple AZs in a region because subnets are treated as regional resources.
 
+[![N|Solid](https://github.com/dineshmenon/pubrepo/blob/master/resc/secure-pg/az-subnet.png?raw=true)](https://nodesource.com/products/nsolid)
+
 ### Isolation between control and data plane
 
 - PostgreSQL-as-a-Service instances and applications that make use of postgresSQL service are setup at a networking level to reside in two *__different virtual networks__*. Each virtual network gives complete control on selection of custom IP-address-range, creation of subnets, and configuration of route tables/network gateways.
+
 - Within the virtual-network, PostgreSQL-as-a-Service instances reside in a *__different subnet__* from control plane operators like Bosh (deployment-and-lifecycle-management-IAAS-agnostic-framework)  and Service-Fabrik (orchestrator-compoenent).
 
 ### Leveraging infrastructure level security
